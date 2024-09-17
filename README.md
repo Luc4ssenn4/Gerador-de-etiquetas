@@ -32,6 +32,7 @@ Este projeto utiliza apenas HTML, CSS e JavaScript puro, sem necessidade de inst
 - A página de impressão utiliza as informações armazenadas para gerar as etiquetas com os dados fornecidos.
 - As etiquetas incluem o endereço de destino, número da nota fiscal, volume, pedido de venda e os códigos de barras para identificação.
 - A página é compatível com a biblioteca **JsBarcode** para renderizar os códigos de barras.
+- O tamanho padrão da etiqueta que foi configurado no código é 100mm x 70mm, na qual pode ser alterado normalmente no arquivo `impressão.html`.
 
 ## Arquivos Principais
 
@@ -45,8 +46,22 @@ Este arquivo contém o formulário utilizado para gerar as etiquetas. Ele é com
 - Uma função JavaScript que extrai os últimos 6 dígitos da chave de acesso para preencher automaticamente o número da nota fiscal.
 - Animação visual no envio do formulário antes de redirecionar para a página de impressão.
 
-#### Estrutura:
+### Impressão de etiquetas
+
+Arquivo: [impressão.html](./impressão.html)
+
+Este arquivo gera e exibe as etiquetas formatadas para impressão com base nos dados inseridos no formulário anterior. Ele utiliza os dados armazenados no `localStorage` para gerar dinamicamente as etiquetas com:
+
+- Informações do endereço de destino, número da nota fiscal e pedido de venda.
+- Códigos de barras gerados dinamicamente usando JsBarcode para a chave de acesso e o pedido de venda.
+- A função `generateEtiquetas` cria e exibe as etiquetas.
+- No arquivo já possui um layout de etiqueta padrão para garantir uma visualização/impressão adequada, toda a estilização é feita no CSS.
+
+
+#### Estruturas:
 ```html
+<!--Formulário de Etiquetas-->
+
 <form id="etiquetaForm">
     <label for="endereco">Endereço do Fornecedor:</label>
     <select id="endereco">...</select>
@@ -65,5 +80,48 @@ Este arquivo contém o formulário utilizado para gerar as etiquetas. Ele é com
 
     <button type="submit">Gerar Etiquetas</button>
 </form>
+
+<!--Impressão-->
+
+<div id="etiquetas-container"></div>
+
+/* Estilização/layout da etiqueta gerada em css */
+
+.etiqueta {
+    width: 378px;
+    height: 265px;
+    border: 1px solid black;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 5px;
+}
+.barcode-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+}
+p {
+    font-size: 10px;
+    letter-spacing: -0.5px;
+    margin: 2px 0;
+}
+
+// função JsBarcode
+
+JsBarcode(`#nf-barcode-${i}`, chaveAcesso, {
+    format: "CODE128",
+    displayValue: false,
+    width: 2,
+    height: 40,
+});
+
+
+
+
+
+
+
 
 
