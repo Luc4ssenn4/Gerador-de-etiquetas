@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressão de Etiquetas</title>
+    <style>
+        /* configuração do layout da etiqueta gerada */
+            body {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 0px;
+            margin: 0;
+            background-color: #f0f0f0;
+            padding: 0px;
+        }
+        .etiqueta {
+            width: 378px;
+            height: 265px;
+            border: 1px solid black;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            box-sizing: border-box;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 5px;
+        }
+        .section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* Alinhamento centralizado */
+            text-align: center; /* Alinhamento centralizado */
+            margin-bottom: 8px;
+        }
+        .nota-fiscal {
+            text-align: center;
+            margin-top: 8px;
+        }
+        .barcode-container {     /*alinhamento dos códigos de barras da etiqueta */
+            display: flex;
+            justify-content: center;
+            margin-top: -5px;
+        }
+        .barcode-container svg {
+            width: 100%;
+            height: auto;
+        }
+        p {                      /* configuração da fonte e espaçamento das informações geradas na etiqueta */
+            margin: 2px 0;
+            font-size: 10px;
+            letter-spacing: -0.5px;
+        }
+        .pedido-compra, .nota-fiscal-text {
+            margin-bottom: -5px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="etiquetas-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const formData = JSON.parse(localStorage.getItem('etiquetaData'));
+        if (!formData) {
+            alert('Nenhum dado encontrado para gerar etiquetas.');
+            return;
+        }
+
+        const enderecos = {
+            "BSB1": {
+                nome: "Amazon CD: BSB1",
+                endereco: [
+                    "Amazon Serviços de Varejo do Brasil Ltda",
+                    "CNPJ: 15436940001096",
+                    "IE: 0774927400365",
+                    "Rodovia DF, #290, KM 1.2 Lote 13,14,15, 16 e 17 - Fazenda Santa Maria, Brasília - Distrito Federal",
+                    "CEP: 72501100"
+                ]
+            },
+            "CNF1": {
+                nome: "Amazon CD: CNF1",
+                endereco: [
+                    "Amazon Serviços de Varejo do Brasil Ltda",
+                    "CNPJ: 15436940000952",
+                    "IE: 002668590054",
+                    "Avenida Juiz Marco Tulio Isaac #7000, Betim - Minas Gerais",
+                    "CEP: 32670250"
+                ]
+            },
+            "FOR2": {
+                nome: "Amazon CD: FOR2",
+                endereco: [
+                    "Amazon Serviços de Varejo do Brasil Ltda",
+                    "CNPJ: 15436940001681",
+                    "IE: 061268801",
+                    "Avenida Quarto Anel Viário, 4343 - Ancuri, Itaitinga - CE",
+                    "CEP: 61880000"
+                ]
+            },
+            "GIG1": {
+                nome: "Amazon CD: GIG1",
+                endereco: [
+                    "Amazon Serviços de Varejo do Brasil Ltda",
+                    "CNPJ: 15436940001410",
+                    "IE: 11821987",
+                    "Av. Arthur Antonio Sendas, s/n / Área 6A, Parque Analandia - RJ",
+                    "CEP: 25585021"
+                ]
+            },
+            "GRU5": {
+                nome: "Amazon CD: GRU5",
+                endereco: [
+                    "Amazon Serviços de Varejo do Brasil Ltda",
+                    "CNPJ: 15436940000367",
+                    "IE: 241099810118",
+                    "Condomínio Prologis 3: Av. Antonio Candido Machado 3100, Andar 5, Cajamar",
+                    "CEP: 07776415"
+                ]
+            },
+            "POA1": {
+                nome: "Amazon CD: POA1",
+                endereco: [
+                    "Amazon Serviços de Varejo do Brasil Ltda",
+                    "CNPJ: 15436940001177",
+                    "IE: 3820025709",
+                    "Rua da Pedreira, #64, Pavilhão 05, Nova Santa Rita - Rio Grande do Sul",
+                    "CEP: 92480000"
+                ]
+            },
+            "REC1": {
+                nome: "Amazon CD: REC1",
+                endereco: [
+                    "Amazon Serviços de Varejo do Brasil Ltda",
+                    "CNPJ: 1543694000150",
+                    "IE: 092038000",
+                    "Rodovia BR 101 Sul, nº 9415, galpão B, Distrito Industrial Santo Estevão, Cabo de Santo Agostinho - PE",
+                    "CEP: 54503010"
+                ]
+            },
+            "XBRB": {
+                nome: "Amazon CD: XBRB",
+                endereco: [
+                    "Amazon Serviços de Varejo do Brasil Ltda",
+                    "CNPJ: 15436940000529",
+                    "IE: 084285907",
+                    "Rodovia BR-101 Sul, nº 3791, Bloco C, Galpão 5, Sala A, Cabo de Santo Agostinho - PE",
+                    "CEP: 54503010"
+                ]
+            },
+            "XBRT": {
+                nome: "Amazon CD: XBRT",
+                endereco: [
+                    "Amazon Serviços de Varejo do Brasil Ltda",
+                    "CNPJ: 15436940000871",
+                    "IE: 241134643114",
+                    "Via de Acesso Norte KM 38, 420 – Mezanino do Galpão 07, Gleba A, Bloco 07, Cajamar – São Paulo",
+                    "CEP: 07789100"
+                ]
+            },
+            "XBRZ": {
+                nome: "Amazon CD: XBRZ",
+                endereco: [
+                    "Amazon Serviços de Varejo do Brasil Ltda",
+                    "CNPJ: 15436940000623",
+                    "IE: 244136030196",
+                    "Avenida Doutor Antonio João Abadalla, 260 - Galpão 300, Condomínio Prologis Cajamar, São Paulo",
+                    "CEP: 07776415"
+                ]
+            },
+            "XBRA": {
+                nome: "Amazon CD: XBRA",
+                endereco: [
+                    "Amazon Serviços de Varejo do Brasil Ltda",
+                    "CNPJ: 15436940000448",
+                    "IE: 241118709114",
+                    "Condomínio Prologis 2: Av. Dr. João Abdalla 260",
+                    "CEP: 07776700 - Cajamar - Bloco 400"
+                ]
+            }
+        };
+        // código JS responsavel pela junção das informações na etiqueta
+        function generateEtiquetas(totalCaixas) {
+            const container = document.getElementById('etiquetas-container');
+            const endereco = enderecos[formData.enderecoSelecionado];
+            const chaveAcesso = formData.chaveAcesso;
+            const numeroNotaFiscal = formData.numeroNotaFiscal;
+            const pedidoVenda = formData.pedidoVenda;
+
+            for (let i = 1; i <= totalCaixas; i++) {
+                const etiqueta = document.createElement('div');
+                etiqueta.className = 'etiqueta';
+                etiqueta.innerHTML = `
+                    <div class="section">
+                        <div>
+                            <p><strong>Endereço de destino:</strong></p>
+                            <p>${endereco.nome}</p>
+                            ${endereco.endereco.map(line => `<p>${line}</p>`).join('')}
+                            <p><strong>Número da Nota Fiscal: ${numeroNotaFiscal}</strong></p>
+                            <p><strong>Volume ${i}/${totalCaixas}</strong></p>
+                            <p class="pedido-compra"><strong>Pedido de venda: ${pedidoVenda}</strong></p>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="barcode-container">
+                            <svg id="pedido-barcode-${i}"></svg>
+                        </div>
+                    </div>
+                    <div class="nota-fiscal">
+                        <div class="barcode-container">
+                            <svg id="nf-barcode-${i}"></svg>
+                        </div>
+                        <p>${chaveAcesso}</p>
+                    </div>
+                `;
+                container.appendChild(etiqueta);
+
+                // geração do código de barras da chave de acesso da NF
+                JsBarcode(`#nf-barcode-${i}`, chaveAcesso, {
+                    format: "CODE128",
+                    displayValue: false,
+                    width: 2,
+                    height: 40,
+                });
+
+                // geração do código de barras do pedido de venda
+                JsBarcode(`#pedido-barcode-${i}`, pedidoVenda, {
+                    format: "CODE128",
+                    displayValue: false,
+                    width: 2,
+                    height: 40,
+                });
+            }
+        }
+        // gera a quantidade de etiquetas de acordo conforme a quantidade informada pelo usuário
+        generateEtiquetas(formData.quantidadeVolumes);
+    });
+</script>
+
+</body>
+</html>

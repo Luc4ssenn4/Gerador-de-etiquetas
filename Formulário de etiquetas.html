@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de etiquetas Amazon</title>
+    <header>
+    <h1>Gerador de Etiquetas Amazon</h1>
+    </header>
+    <style>
+        header {
+            color: white;
+            padding: 70px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.5s ease;
+            }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #121212;
+            font-family: Arial, sans-serif;
+            color: #e0e0e0;
+        }
+        .form-container {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.5s ease-in-out, slideIn 0.5s ease-in-out;
+}
+
+/* Animação de fade-in */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Animação de deslizamento para a direita */
+@keyframes slideIn {
+    0% {
+        transform: translateX(-20px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .form-container select, .form-container input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-container select:focus, .form-container input:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.7);
+            outline: none;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #205fb1;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .form-container button:hover {
+            background-color: #164f99;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #e0e0e0;
+        }
+        @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease forwards;
+}
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <form id="etiquetaForm">
+        <label for="endereco">Endereço do Fornecedor:</label>
+        <select id="endereco">
+            <option value="XBRA">Amazon CD: XBRA (Prologis 2 Galpão 400)</option>
+            <option value="BSB1">Amazon CD: BSB1 (DF)</option>
+            <option value="CNF1">Amazon CD: CNF1 (MG)</option>
+            <option value="FOR2">Amazon CD: FOR2 (CE)</option>
+            <option value="GIG1">Amazon CD: GIG1 (RJ)</option>
+            <option value="GRU5">Amazon CD: GRU5 (Prologis 3)</option>
+            <option value="POA1">Amazon CD: POA1 (RS - Pavilhão 05)</option>
+            <option value="REC1">Amazon CD: REC1 (PE - Nº 9415)</option>
+            <option value="XBRB">Amazon CD: XBRB (PE - Nº 3791)</option>
+            <option value="XBRT">Amazon CD: XBRT (CD Marabraz)</option>
+            <option value="XBRZ">Amazon CD: XBRZ (Prologis 2 Galpão 300)</option>
+        </select>
+
+        <label for="chaveAcesso">Chave de Acesso:</label>
+        <input type="text" id="chaveAcesso" required>
+
+        <label for="numeroNotaFiscal">Número da Nota Fiscal:</label>
+        <input type="text" id="numeroNotaFiscal" required>
+
+        <label for="pedidoVenda">Pedido de Venda:</label>
+        <input type="text" id="pedidoVenda" required>
+
+        <label for="quantidadeVolumes">Quantidade de Volumes:</label>
+        <input type="number" id="quantidadeVolumes" required>
+
+        <button type="submit">Gerar Etiquetas</button>
+    </form>
+</div>
+<footer>
+    <p>Made by Lucas Sena de Lima - Equipe Sistemas | Luft Solutions</p>
+</footer>
+<script>
+    document.getElementById('chaveAcesso').addEventListener('input', function() {
+        const chaveAcesso = this.value;
+        const numeroNotaFiscalInput = document.getElementById('numeroNotaFiscal');
+        if (chaveAcesso.length >= 35) {
+            const numeroNotaFiscal = chaveAcesso.substring(28, 34).replace(/^0+/, '');
+            numeroNotaFiscalInput.value = numeroNotaFiscal;
+        } else {
+            numeroNotaFiscalInput.value = '';
+        }
+    });
+
+    document.getElementById('etiquetaForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const enderecoSelecionado = document.getElementById('endereco').value;
+    const chaveAcesso = document.getElementById('chaveAcesso').value;
+    const numeroNotaFiscal = document.getElementById('numeroNotaFiscal').value;
+    const pedidoVenda = document.getElementById('pedidoVenda').value;
+    const quantidadeVolumes = parseInt(document.getElementById('quantidadeVolumes').value);
+
+    const formData = {
+        enderecoSelecionado,
+        chaveAcesso,
+        numeroNotaFiscal,
+        pedidoVenda,
+        quantidadeVolumes
+    };
+
+    localStorage.setItem('etiquetaData', JSON.stringify(formData));
+
+    // Adiciona a classe fade-out para a animação
+    const form = document.querySelector('.form-container');
+    form.classList.add('fade-out');
+
+    // Aguarda a conclusão da animação antes de redirecionar
+    setTimeout(function() {
+        window.location.href = 'impressão.html';
+    }, 500); // 500ms é o tempo da animação
+});
+</script>
+</body>
+</html>
