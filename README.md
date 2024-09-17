@@ -10,8 +10,6 @@ O sistema é dividido em duas partes principais: o formulário de entrada de dad
 - [Arquivos Principais](#arquivos-principais)
   - [Formulário de etiquetas](#formulário-de-etiquetas)
   - [Impressão de etiquetas](#impressão-de-etiquetas)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
 
 ## Instalação
 
