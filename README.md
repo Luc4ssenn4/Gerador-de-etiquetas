@@ -15,8 +15,8 @@ O sistema é dividido em duas partes principais: o formulário de entrada de dad
 
 Este projeto utiliza apenas HTML, CSS e JavaScript puro, sem necessidade de instalação de bibliotecas adicionais além das já referenciadas via CDN.
 
-1. Faça o download dos arquivos HTML.
-2. Abra o arquivo `Formulário de etiquetas.html` em um navegador para iniciar o processo de geração de etiquetas.
+1. Faça o download dos arquivos (arquivos zipados no final do documentário).
+2. Abra o arquivo `index.html` em um navegador para iniciar o processo de geração de etiquetas.
 3. Obs: para um melhor ajuste da impressão, é recomendado que seja utilizado os navegadores Microsoft Edge e Google Chrome.
 
 ## Uso
@@ -36,7 +36,7 @@ Este projeto utiliza apenas HTML, CSS e JavaScript puro, sem necessidade de inst
 
 ### Formulário de etiquetas
 
-Arquivo: [Formulário de etiquetas.html](./Formulário%20de%20etiquetas.html)
+Arquivo: [index.html](./index.html)
 
 Este arquivo contém o formulário utilizado para gerar as etiquetas. Ele é composto por:
 
@@ -55,65 +55,6 @@ Este arquivo gera e exibe as etiquetas formatadas para impressão com base nos d
 - A função `generateEtiquetas` cria e exibe as etiquetas.
 - No arquivo já possui um layout de etiqueta padrão para garantir uma visualização/impressão adequada, toda a estilização é feita no CSS.
 
-
-#### Estruturas:
-```html
-<!--Formulário de Etiquetas-->
-
-<form id="etiquetaForm">
-    <label for="endereco">Endereço do Fornecedor:</label>
-    <select id="endereco">...</select>
-
-    <label for="chaveAcesso">Chave de Acesso:</label>
-    <input type="text" id="chaveAcesso" required>
-
-    <label for="numeroNotaFiscal">Número da Nota Fiscal:</label>
-    <input type="text" id="numeroNotaFiscal" required>
-
-    <label for="pedidoVenda">Pedido de Venda:</label>
-    <input type="text" id="pedidoVenda" required>
-
-    <label for="quantidadeVolumes">Quantidade de Volumes:</label>
-    <input type="number" id="quantidadeVolumes" required>
-
-    <button type="submit">Gerar Etiquetas</button>
-</form>
-
-<!--Impressão-->
-
-<div id="etiquetas-container"></div>
-
-/* Estilização/layout da etiqueta gerada em css */
-
-.etiqueta {
-    width: 378px;
-    height: 265px;
-    border: 1px solid black;
-    padding: 10px;
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 5px;
-}
-.barcode-container {
-    display: flex;
-    justify-content: center;
-    margin-top: -5px;
-}
-p {
-    font-size: 10px;
-    letter-spacing: -0.5px;
-    margin: 2px 0;
-}
-
-// função JsBarcode
-
-JsBarcode(`#nf-barcode-${i}`, chaveAcesso, {
-    format: "CODE128",
-    displayValue: false,
-    width: 2,
-    height: 40,
-});
 
 
 
