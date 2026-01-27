@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerador de etiquetas Amazon</title>
+  <link rel="stylesheet" href="C:\Users\lucas.slima\Desktop\Gerador de etiquetas\form.css" />
+</head>
+<body>
+  <header>
+    <h1>Gerador de Etiquetas Amazon</h1>
+  </header>
+
+  <div class="form-container">
+    <form id="etiquetaForm">
+      <label for="endereco">Endereço do Fornecedor:</label>
+      <select id="endereco">
+        <option value="XBRA">Amazon CD: XBRA (Prologis 2 Galpão 400)</option>
+        <option value="BSB1">Amazon CD: BSB1 (DF)</option>
+        <option value="CNF1">Amazon CD: CNF1 (MG)</option>
+        <option value="FOR2">Amazon CD: FOR2 (CE)</option>
+        <option value="GIG1">Amazon CD: GIG1 (RJ)</option>
+        <option value="GRU5">Amazon CD: GRU5 (Prologis 3)</option>
+        <option value="POA1">Amazon CD: POA1 (RS - Pavilhão 05)</option>
+        <option value="REC1">Amazon CD: REC1 (PE - Nº 9415)</option>
+        <option value="XBRB">Amazon CD: XBRB (PE - Nº 3791)</option>
+        <option value="XBRT">Amazon CD: XBRT (CD Marabraz)</option>
+        <option value="XBRZ">Amazon CD: XBRZ (Prologis 2 Galpão 300)</option>
+      </select>
+
+      <label for="chaveAcesso">Chave de Acesso:</label>
+      <input type="text" id="chaveAcesso" required />
+
+      <label for="numeroNotaFiscal">Número da Nota Fiscal:</label>
+      <input type="text" id="numeroNotaFiscal" required />
+
+      <label for="pedidoVenda">Pedido de Venda:</label>
+      <input type="text" id="pedidoVenda" required />
+
+      <label for="quantidadeVolumes">Quantidade de Volumes:</label>
+      <input type="number" id="quantidadeVolumes" required />
+
+      <button type="submit">Gerar Etiquetas</button>
+    </form>
+  </div>
+  <footer>
+    <p>Made by Lucas Sena de Lima - Equipe Sistemas | Refit</p>
+  </footer>
+  <script src="C:\Users\lucas.slima\Desktop\Gerador de etiquetas\form.css"></script>
+</body>
+</html>
